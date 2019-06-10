@@ -22,34 +22,13 @@
  * SOFTWARE.
  */
 
-class abstract imports cape:
+class is Exception:
 
-func forApplication(context as ApplicationContext) static as this
+func forError(error as Error) static as this
 {
-	assert context
-	IFDEF "target_android" {
-		return AudioManagerForAndroid.forApplication(context as AndroidApplicationContext)
-	}
-	ELSE IFDEF "target_html" {
-		return AudioManagerForHTML5.forApplication(context as ApplicationContext)
-	}
-	ELSE IFDEF "target_iosoc" {
-		return AudioManagerForIOS.forApplication(context)
-	}
-	ELSE IFDEF "target_macosoc" {
-		return AudioManagerForMacOS.forApplication(context)
-	}
-	ELSE IFDEF "target_kotlin" {
-		return AudioManagerForKotlin.forApplication(context as KotlinApplicationContext)
-	}
-	ELSE IFDEF "target_swift" {
-		return AudioManagerForSwift.forApplicationContext(context)
-	}
-	ELSE {
-		ERROR "Not implemented"
-		return null
-	}
+	var v = new this()
+	v.setError(error)
+	return v
 }
 
-func getClipForResource(id as string) abstract as AudioClip
-func getStreamForResource(id as string) abstract as AudioStream
+prop error as Error

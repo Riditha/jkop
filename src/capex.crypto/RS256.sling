@@ -1,7 +1,7 @@
 
 /*
  * This file is part of Jkop
- * Copyright (c) 2016-2018 Job and Esther Technologies Oy
+ * Copyright (c) 2016-2019 Eqela Oy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,28 +22,12 @@
  * SOFTWARE.
  */
 
-class abstract imports cape:
+class abstract:
 
-func forApplication(context as ApplicationContext) static as this
+func instance static as this
 {
-	assert context
-	IFDEF "target_android" {
-		return AudioManagerForAndroid.forApplication(context as AndroidApplicationContext)
-	}
-	ELSE IFDEF "target_html" {
-		return AudioManagerForHTML5.forApplication(context as ApplicationContext)
-	}
-	ELSE IFDEF "target_iosoc" {
-		return AudioManagerForIOS.forApplication(context)
-	}
-	ELSE IFDEF "target_macosoc" {
-		return AudioManagerForMacOS.forApplication(context)
-	}
-	ELSE IFDEF "target_kotlin" {
-		return AudioManagerForKotlin.forApplication(context as KotlinApplicationContext)
-	}
-	ELSE IFDEF "target_swift" {
-		return AudioManagerForSwift.forApplicationContext(context)
+	IFDEF "target_netcore" {
+		return new RS256ForNetcore()
 	}
 	ELSE {
 		ERROR "Not implemented"
@@ -51,5 +35,5 @@ func forApplication(context as ApplicationContext) static as this
 	}
 }
 
-func getClipForResource(id as string) abstract as AudioClip
-func getStreamForResource(id as string) abstract as AudioStream
+func generate(data as buffer, privateKey as string) abstract as buffer
+func validate(data as buffer, signature as buffer, publicKey as string) abstract as bool
