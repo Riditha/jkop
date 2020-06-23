@@ -251,7 +251,7 @@ func setWidgetImage(image as Image)
 	ELSE {
 		ERROR "Not implemented"
 	}
-	IFNDEF "target_ios"  {
+	IFNDEF "target_ios" {
 		Widget.onLayoutChanged(this)
 	}
 }
